@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
 
+const AppError = require('./AppError')
+
 
 app.get('/', (req, res) => {
     res.send("Homepage");
@@ -12,13 +14,18 @@ app.get('/hommer', (req, res) => {
     res.render("Hommer");
     // we can prevent and add our own error handle message as
     // throw new Error('not found')
+
+
+    // throwing the error from the custom class
+    throw new AppError('custom error as not found', 404)
+
 });
 
 app.get('/dogs',(req, res) => {
     res.send("Woof");
 });
 
-// our custom error handler executed whenever the errorful route is renderes
+// our custom error handler executed whenever the errorful route is renders
 app.use((err,req,res,next)=>{
     console.log("error");
     // console.log(err);
